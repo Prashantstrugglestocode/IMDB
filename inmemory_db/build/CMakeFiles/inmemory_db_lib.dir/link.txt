@@ -1,0 +1,2 @@
+/usr/bin/ar qc libinmemory_db_lib.a CMakeFiles/inmemory_db_lib.dir/src/types.cpp.o CMakeFiles/inmemory_db_lib.dir/src/table.cpp.o CMakeFiles/inmemory_db_lib.dir/src/database.cpp.o
+/usr/bin/ranlib libinmemory_db_lib.a
