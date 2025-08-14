@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/prashant/Documents/In_memory_database/inmemory_db/build/cmake_install.cmake",
+		"/Users/prashant/Documents/In_memory_database/inmemory_db/build/tests/cmake_install.cmake",
+		"/Users/prashant/Documents/In_memory_database/inmemory_db/build/_deps/catch2-build/cmake_install.cmake",
+		"/Users/prashant/Documents/In_memory_database/inmemory_db/build/_deps/catch2-build/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

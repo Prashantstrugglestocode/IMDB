@@ -1,0 +1,2 @@
+/usr/bin/ar qc libimdb_lib.a CMakeFiles/imdb_lib.dir/src/types.cpp.o CMakeFiles/imdb_lib.dir/src/table.cpp.o CMakeFiles/imdb_lib.dir/src/database.cpp.o
+/usr/bin/ranlib libimdb_lib.a

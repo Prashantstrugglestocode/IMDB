@@ -1,0 +1,6 @@
+unit_tests 1 0.286297
+cli_import_count 1 0.26259
+cli_rows_after_import 1 0.01771
+cli_update 1 0.0146166
+cli_delete 1 0.0111231
+---
