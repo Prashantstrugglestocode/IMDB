@@ -1,4 +1,0 @@
-/Users/prashant/Documents/In_memory_database/inmemory_db/build/CMakeFiles/inmemory_db_lib.dir
-/Users/prashant/Documents/In_memory_database/inmemory_db/build/CMakeFiles/inmemory_db.dir
-/Users/prashant/Documents/In_memory_database/inmemory_db/build/CMakeFiles/edit_cache.dir
-/Users/prashant/Documents/In_memory_database/inmemory_db/build/CMakeFiles/rebuild_cache.dir
