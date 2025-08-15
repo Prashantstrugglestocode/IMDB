@@ -1,21 +1,21 @@
-Start testing: Aug 15 01:17 CEST
+Start testing: Aug 15 17:20 CEST
 ----------------------------------------------------------
 1/5 Testing: unit_tests
 1/5 Test: unit_tests
 Command: "/Users/prashant/Documents/In_memory_database/inmemory_db/build/tests/imdb_tests"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"unit_tests" start time: Aug 15 01:17 CEST
+"unit_tests" start time: Aug 15 17:20 CEST
 Output:
 ----------------------------------------------------------
-Randomness seeded to: 2480761768
+Randomness seeded to: 2830822405
 ===============================================================================
 All tests passed (3 assertions in 1 test case)
 
 <end of output>
-Test time =   0.29 sec
+Test time =   0.25 sec
 ----------------------------------------------------------
 Test Passed.
-"unit_tests" end time: Aug 15 01:17 CEST
+"unit_tests" end time: Aug 15 17:20 CEST
 "unit_tests" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -24,7 +24,7 @@ Test Passed.
 Command: "/bin/bash" "-lc" "printf '%s
 ' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'SELECT ALL new_house' 'PRINT TABLE new_house' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_import_count" start time: Aug 15 01:17 CEST
+"cli_import_count" start time: Aug 15 17:20 CEST
 Output:
 ----------------------------------------------------------
 
@@ -66,7 +66,7 @@ Test time =   0.26 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[IMPORTED 3]
-"cli_import_count" end time: Aug 15 01:17 CEST
+"cli_import_count" end time: Aug 15 17:20 CEST
 "cli_import_count" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -75,7 +75,7 @@ Required regular expression found. Regex=[IMPORTED 3]
 Command: "/bin/bash" "-lc" "printf '%s
 ' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'SELECT ALL new_house' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_rows_after_import" start time: Aug 15 01:17 CEST
+"cli_rows_after_import" start time: Aug 15 17:20 CEST
 Output:
 ----------------------------------------------------------
 
@@ -103,11 +103,11 @@ Rows: 3
 
 > Goodbye!
 <end of output>
-Test time =   0.02 sec
+Test time =   0.01 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[Rows: 3]
-"cli_rows_after_import" end time: Aug 15 01:17 CEST
+"cli_rows_after_import" end time: Aug 15 17:20 CEST
 "cli_rows_after_import" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -116,7 +116,7 @@ Required regular expression found. Regex=[Rows: 3]
 Command: "/bin/bash" "-lc" "printf '%s
 ' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'UPDATE new_house city Sunnyvale price 1000000' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_update" start time: Aug 15 01:17 CEST
+"cli_update" start time: Aug 15 17:20 CEST
 Output:
 ----------------------------------------------------------
 
@@ -141,7 +141,7 @@ Test time =   0.01 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[UPDATED 1]
-"cli_update" end time: Aug 15 01:17 CEST
+"cli_update" end time: Aug 15 17:20 CEST
 "cli_update" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -150,7 +150,7 @@ Required regular expression found. Regex=[UPDATED 1]
 Command: "/bin/bash" "-lc" "printf '%s
 ' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'DELETE FROM new_house id 2' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_delete" start time: Aug 15 01:17 CEST
+"cli_delete" start time: Aug 15 17:20 CEST
 Output:
 ----------------------------------------------------------
 
@@ -175,8 +175,8 @@ Test time =   0.01 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[DELETED 1]
-"cli_delete" end time: Aug 15 01:17 CEST
+"cli_delete" end time: Aug 15 17:20 CEST
 "cli_delete" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Aug 15 01:17 CEST
+End testing: Aug 15 17:20 CEST

@@ -1,55 +1,62 @@
 #include "imdb/database.hpp"
 #include "imdb/table.hpp"
 #include "imdb/types.hpp"
-
 #include <iostream>
-#include <sstream>
 #include <vector>
 #include <string>
 #include <iomanip>
-#include <algorithm>
 #include <cctype>
-#include <optional>
 
 using namespace imdb;
 
 static std::string trim_quotes(const std::string& s) {
-    if (s.size() >= 2 && s.front()=='"' && s.back()=='"') return s.substr(1, s.size()-2);
+    if (s.size() >= 2 && s.front() == '"' && s.back() == '"') return s.substr(1, s.size() - 2);
     return s;
 }
 
 static std::string to_upper(std::string s) {
-    for (auto& c : s) c = std::toupper(static_cast<unsigned char>(c));
+    for (size_t i = 0; i < s.size(); i++) s[i] = std::toupper(static_cast<unsigned char>(s[i]));
     return s;
 }
 
 static std::vector<std::string> tokenize(const std::string& line) {
     std::vector<std::string> out;
-    std::string cur;
+    std::string current;
     bool in_quotes = false;
-    for (char ch : line) {
+
+    for (size_t i = 0; i < line.size(); i++) {
+        char c = line[i];
         if (in_quotes) {
-            cur.push_back(ch);
-            if (ch == '"') in_quotes = false;
+            current.push_back(c);
+            if (c == '"') in_quotes = false;
         } else {
-            if (ch == '"') {
-                if (!cur.empty()) { out.push_back(cur); cur.clear(); }
-                cur.push_back(ch);
+            if (c == '"') {
+                if (!current.empty()) {
+                    out.push_back(current);
+                    current.clear();
+                }
+                current.push_back(c);
                 in_quotes = true;
-            } else if (std::isspace(static_cast<unsigned char>(ch))) {
-                if (!cur.empty()) { out.push_back(cur); cur.clear(); }
+            } else if (std::isspace(static_cast<unsigned char>(c))) {
+                if (!current.empty()) {
+                    out.push_back(current);
+                    current.clear();
+                }
             } else {
-                cur.push_back(ch);
+                current.push_back(c);
             }
         }
     }
-    if (!cur.empty()) out.push_back(cur);
+    if (!current.empty()) out.push_back(current);
     return out;
 }
 
-static std::optional<int64_t> to_i64(const std::string& s) {
-    try { size_t p = 0; long long v = std::stoll(s, &p); if (p == s.size()) return static_cast<int64_t>(v); }
-    catch (...) {}
+static std::optional<int64_t> to_int64(const std::string& s) {
+    try {
+        size_t p = 0;
+        long long v = std::stoll(s, &p);
+        if (p == s.size()) return static_cast<int64_t>(v);
+    } catch (...) {}
     return std::nullopt;
 }
 
@@ -59,18 +66,22 @@ static ColumnType parse_type(const std::string& t) {
     return ColumnType::Text;
 }
 
-static Value parse_value_token(const std::string& raw, std::optional<ColumnType> expected = std::nullopt) {
-    std::string t = raw;
-    if (!t.empty() && t.front()=='"' && t.back()=='"') t = trim_quotes(t);
+static Value parse_value_token(const std::string& token, std::optional<ColumnType> expected) {
+    std::string t = token;
+    if (!t.empty() && t.front() == '"' && t.back() == '"') t = trim_quotes(t);
+
     if (expected.has_value()) {
         if (*expected == ColumnType::Int) {
-            if (auto v = to_i64(t)) return *v;
+            auto x = to_int64(t);
+            if (x.has_value()) return *x;
             return t;
         } else {
             return t;
         }
     }
-    if (auto v = to_i64(t)) return *v;
+
+    auto x = to_int64(t);
+    if (x.has_value()) return *x;
     return t;
 }
 
@@ -81,51 +92,63 @@ static void print_banner() {
     std::cout << "=============================================\n\n";
 }
 
-static void print_help() {
-    const int A = 28;
-    auto line = [](){ std::cout << std::string(70, '-') << "\n"; };
-    std::cout << "\n";
-    line();
-    std::cout << std::left << std::setw(A) << "HELP" << "Show this help\n";
-    std::cout << std::left << std::setw(A) << "TABLES" << "List all tables\n";
-    std::cout << std::left << std::setw(A) << "CREATE TABLE <name>" << "Create a new table\n";
-    std::cout << std::left << std::setw(A) << "DROP TABLE <name>" << "Remove a table\n";
-    std::cout << std::left << std::setw(A) << "ADD COLUMN <table> <col> <type>" << "Add a column (INT or TEXT)\n";
-    std::cout << std::left << std::setw(A) << "INSERT <table> <values...>" << "Insert a row (match column order)\n";
-    std::cout << std::left << std::setw(A) << "SELECT ALL <table>" << "Show all rows\n";
-    std::cout << std::left << std::setw(A) << "SELECT WHERE <table> <col> = <val>" << "Filter rows by equality\n";
-    std::cout << std::left << std::setw(A) << "UPDATE <table> <col> <val> <set_col> <new_val>" << "Update rows\n";
-    std::cout << std::left << std::setw(A) << "DELETE FROM <table> <col> <val>" << "Delete rows\n";
-    std::cout << std::left << std::setw(A) << "PRINT TABLE <table>" << "Pretty print a table\n";
-    std::cout << std::left << std::setw(A) << "PRINT SCHEMA <table>" << "Show table schema\n";
-    std::cout << std::left << std::setw(A) << "IMPORT CSV <table> \"path\" [HEADER]" << "Import rows from CSV\n";
-    std::cout << std::left << std::setw(A) << "EXIT" << "Quit the program\n";
-    line();
-    std::cout << "Notes:\n";
-    std::cout << "• Use quotes for names/values with spaces.\n";
-    std::cout << "• INSERT values must match column count and types.\n";
-    std::cout << "• CSV import expects columns in the table’s column order.\n";
-    line();
-    std::cout << "\n";
-}
+static void print_rows(const Table* table, const std::vector<Row>& rows) {
+    if (!table) { std::cout << "No table.\n"; return; }
+    auto columns = table->get_columns();
+    if (columns.empty()) { std::cout << "No columns.\n"; return; }
 
-static void print_rows(const Table* tbl, const std::vector<Row>& rows) {
-    if (!tbl) { std::cout << "No table.\n"; return; }
-    auto cols = tbl->get_columns();
-    if (cols.empty()) { std::cout << "No columns.\n"; return; }
-    const int W = 18;
-    for (size_t i=0;i<cols.size();++i){ std::cout<<std::setw(W)<<cols[i].name; if(i+1<cols.size()) std::cout<<" | "; }
+    const int width = 18;
+
+    for (size_t i = 0; i < columns.size(); i++) {
+        std::cout << std::setw(width) << columns[i].name;
+        if (i + 1 < columns.size()) std::cout << " | ";
+    }
     std::cout << "\n";
-    for (size_t i=0;i<cols.size();++i){ std::cout<<std::string(W,'-'); if(i+1<cols.size()) std::cout<<"-+-"; }
+
+    for (size_t i = 0; i < columns.size(); i++) {
+        std::cout << std::string(width, '-');
+        if (i + 1 < columns.size()) std::cout << "-+-";
+    }
     std::cout << "\n";
-    for (const auto& r: rows){
-        for (size_t i=0;i<cols.size();++i){
-            std::string cell = (i<r.values.size()) ? value_to_string(r.values[i]) : "";
-            std::cout<<std::setw(W)<<cell; if(i+1<cols.size()) std::cout<<" | ";
+
+    for (size_t r = 0; r < rows.size(); r++) {
+        for (size_t i = 0; i < columns.size(); i++) {
+            std::string cell = "";
+            if (i < rows[r].values.size()) cell = value_to_string(rows[r].values[i]);
+            std::cout << std::setw(width) << cell;
+            if (i + 1 < columns.size()) std::cout << " | ";
         }
         std::cout << "\n";
     }
+
     std::cout << "\nRows: " << rows.size() << "\n\n";
+}
+
+static void print_help() {
+    const int a = 32;
+    auto line = [](){ std::cout << std::string(70, '-') << "\n"; };
+    std::cout << "\n";
+    line();
+    std::cout << std::left << std::setw(a) << "HELP" << "Show this help\n";
+    std::cout << std::left << std::setw(a) << "TABLES" << "List all tables\n";
+    std::cout << std::left << std::setw(a) << "CREATE TABLE <name>" << "Create table\n";
+    std::cout << std::left << std::setw(a) << "DROP TABLE <name>" << "Drop table\n";
+    std::cout << std::left << std::setw(a) << "ADD COLUMN <table> <col> <type>" << "Add column (INT or TEXT)\n";
+    std::cout << std::left << std::setw(a) << "ADD CONSTRAINT <table> PRIMARY KEY <col>" << "Set primary key\n";
+    std::cout << std::left << std::setw(a) << "ADD CONSTRAINT <table> NOT NULL <col>" << "Set not-null on column\n";
+    std::cout << std::left << std::setw(a) << "INSERT <table> <values...>" << "Insert row\n";
+    std::cout << std::left << std::setw(a) << "SELECT ALL <table>" << "Show all rows\n";
+    std::cout << std::left << std::setw(a) << "SELECT WHERE <table> <col> = <val>" << "Filter rows\n";
+    std::cout << std::left << std::setw(a) << "UPDATE <table> <col> <val> <set_col> <new_val>" << "Update rows\n";
+    std::cout << std::left << std::setw(a) << "DELETE FROM <table> <col> <val>" << "Delete rows\n";
+    std::cout << std::left << std::setw(a) << "PRINT TABLE <table>" << "Print table\n";
+    std::cout << std::left << std::setw(a) << "PRINT SCHEMA <table>" << "Print schema\n";
+    std::cout << std::left << std::setw(a) << "IMPORT CSV <table> \"path\" [HEADER]" << "Import CSV\n";
+    std::cout << std::left << std::setw(a) << "EXIT" << "Quit\n";
+    line();
+    std::cout << "Use quotes for names or values with spaces.\n";
+    line();
+    std::cout << "\n";
 }
 
 int main() {
@@ -133,16 +156,16 @@ int main() {
     print_banner();
     std::cout << "Type HELP to see commands.\n\n";
 
-    std::string line;
+    std::string input;
     while (true) {
         std::cout << "> ";
-        if (!std::getline(std::cin, line)) break;
-        if (line.empty()) continue;
+        if (!std::getline(std::cin, input)) break;
+        if (input.empty()) continue;
 
-        auto toks = tokenize(line);
-        if (toks.empty()) continue;
+        std::vector<std::string> tokens = tokenize(input);
+        if (tokens.empty()) continue;
 
-        std::string cmd = to_upper(toks[0]);
+        std::string cmd = to_upper(tokens[0]);
 
         if (cmd == "HELP" || cmd == "?") { print_help(); continue; }
         if (cmd == "EXIT" || cmd == "QUIT") { std::cout << "Goodbye!\n"; break; }
@@ -150,132 +173,193 @@ int main() {
         if (cmd == "TABLES") {
             auto names = db.get_table_names();
             if (names.empty()) { std::cout << "(no tables)\n"; continue; }
-            std::cout << "Tables:\n";
-            for (auto& n : names) std::cout << " - " << n << "\n";
+            for (size_t i = 0; i < names.size(); i++) std::cout << " - " << names[i] << "\n";
             std::cout << "\n";
             continue;
         }
 
-        if (cmd == "CREATE" && toks.size() >= 3 && to_upper(toks[1]) == "TABLE") {
-            std::string tname = trim_quotes(toks[2]);
-            bool ok = db.create_table(tname);
-            std::cout << (ok ? "OK\n" : "ERR: table exists?\n");
+        if (cmd == "CREATE" && tokens.size() >= 3 && to_upper(tokens[1]) == "TABLE") {
+            std::string table_name = trim_quotes(tokens[2]);
+            bool ok = db.create_table(table_name);
+            if (ok) std::cout << "OK\n"; else std::cout << "ERR: table exists?\n";
             continue;
         }
 
-        if (cmd == "DROP" && toks.size() >= 3 && to_upper(toks[1]) == "TABLE") {
-            std::string tname = trim_quotes(toks[2]);
-            bool ok = db.drop_table(tname);
-            std::cout << (ok ? "OK\n" : "ERR: no such table\n");
+        if (cmd == "DROP" && tokens.size() >= 3 && to_upper(tokens[1]) == "TABLE") {
+            std::string table_name = trim_quotes(tokens[2]);
+            bool ok = db.drop_table(table_name);
+            if (ok) std::cout << "OK\n"; else std::cout << "ERR: no such table\n";
             continue;
         }
 
-        if (cmd == "ADD" && toks.size() >= 5 && to_upper(toks[1]) == "COLUMN") {
-            std::string tname = trim_quotes(toks[2]);
-            std::string cname = trim_quotes(toks[3]);
-            std::string ctype = toks[4];
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            try { t->add_column(cname, parse_type(ctype)); std::cout << "OK\n"; }
-            catch (const std::exception& e) { std::cout << "ERR: " << e.what() << "\n"; }
+        if (cmd == "ADD" && tokens.size() >= 5 && to_upper(tokens[1]) == "COLUMN") {
+            std::string table_name = trim_quotes(tokens[2]);
+            std::string col_name = trim_quotes(tokens[3]);
+            std::string col_type = tokens[4];
+
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+
+            try {
+                tbl->add_column(col_name, parse_type(col_type));
+                std::cout << "OK\n";
+            } catch (...) {
+                std::cout << "ERR: column exists\n";
+            }
             continue;
         }
 
-        if (cmd == "INSERT" && toks.size() >= 3) {
-            std::string tname = trim_quotes(toks[1]);
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            auto cols = t->get_columns();
+        if (cmd == "ADD" && tokens.size() >= 6 && to_upper(tokens[1]) == "CONSTRAINT") {
+            std::string table_name = trim_quotes(tokens[2]);
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+
+            std::string word3 = to_upper(tokens[3]);
+
+            if (word3 == "PRIMARY" && tokens.size() >= 6 && to_upper(tokens[4]) == "KEY") {
+                std::string col_name = trim_quotes(tokens[5]);
+                bool ok = tbl->set_primary_key(col_name);
+                if (ok) std::cout << "OK\n"; else std::cout << "ERR\n";
+                continue;
+            }
+
+            if (word3 == "NOT" && tokens.size() >= 6 && to_upper(tokens[4]) == "NULL") {
+                std::string col_name = trim_quotes(tokens[5]);
+                bool ok = tbl->set_not_null(col_name, true);
+                if (ok) std::cout << "OK\n"; else std::cout << "ERR\n";
+                continue;
+            }
+
+            std::cout << "ERR\n";
+            continue;
+        }
+
+        if (cmd == "INSERT" && tokens.size() >= 3) {
+            std::string table_name = trim_quotes(tokens[1]);
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+
+            auto cols = tbl->get_columns();
             if (cols.empty()) { std::cout << "ERR: define columns first\n"; continue; }
-            if (toks.size() - 2 < cols.size()) { std::cout << "ERR: need " << cols.size() << " values\n"; continue; }
-            std::vector<Value> vals; vals.reserve(cols.size());
-            for (size_t i=0;i<cols.size();++i) vals.push_back(parse_value_token(toks[2+i], cols[i].type));
-            bool ok = t->insert_row(vals);
-            std::cout << (ok ? "OK\n" : "ERR: type/arity mismatch\n");
+            if (tokens.size() - 2 < cols.size()) { std::cout << "ERR: need " << cols.size() << " values\n"; continue; }
+
+            std::vector<Value> values;
+            values.reserve(cols.size());
+            for (size_t i = 0; i < cols.size(); i++) {
+                values.push_back(parse_value_token(tokens[2 + i], cols[i].type));
+            }
+
+            bool ok = tbl->insert_row(values);
+            if (ok) std::cout << "OK\n"; else std::cout << "ERR\n";
             continue;
         }
 
-        if (cmd == "SELECT" && toks.size() >= 3 && to_upper(toks[1]) == "ALL") {
-            std::string tname = trim_quotes(toks[2]);
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            print_rows(t, t->select_all());
+        if (cmd == "SELECT" && tokens.size() >= 3 && to_upper(tokens[1]) == "ALL") {
+            std::string table_name = trim_quotes(tokens[2]);
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+            print_rows(tbl, tbl->select_all());
             continue;
         }
 
-        if (cmd == "SELECT" && toks.size() >= 6 && to_upper(toks[1]) == "WHERE") {
-            std::string tname = trim_quotes(toks[2]);
-            std::string col   = trim_quotes(toks[3]);
-            std::string eq    = toks[4];
-            std::string valtk = toks[5];
-            if (eq != "=") { std::cout << "ERR: use '='\n"; continue; }
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            auto cols = t->get_columns();
-            auto it = std::find_if(cols.begin(), cols.end(), [&](const Column& c){ return c.name == col; });
-            if (it == cols.end()) { std::cout << "ERR: no such column\n"; continue; }
-            Value v = parse_value_token(valtk, it->type);
-            print_rows(t, t->select_where(col, v));
+        if (cmd == "SELECT" && tokens.size() >= 6 && to_upper(tokens[1]) == "WHERE") {
+            std::string table_name = trim_quotes(tokens[2]);
+            std::string col_name = trim_quotes(tokens[3]);
+            std::string equal_sign = tokens[4];
+            std::string value_token = tokens[5];
+            if (equal_sign != "=") { std::cout << "ERR\n"; continue; }
+
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+
+            auto cols = tbl->get_columns();
+            std::optional<ColumnType> col_type;
+            for (size_t i = 0; i < cols.size(); i++) {
+                if (cols[i].name == col_name) { col_type = cols[i].type; break; }
+            }
+            if (!col_type) { std::cout << "ERR: no such column\n"; continue; }
+
+            Value v = parse_value_token(value_token, col_type);
+            print_rows(tbl, tbl->select_where(col_name, v));
             continue;
         }
 
-        if (cmd == "UPDATE" && toks.size() >= 6) {
-            std::string tname = trim_quotes(toks[1]);
-            std::string sc    = trim_quotes(toks[2]);
-            std::string svtk  = toks[3];
-            std::string uc    = trim_quotes(toks[4]);
-            std::string nvtk  = toks[5];
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            auto cols = t->get_columns();
-            auto it1 = std::find_if(cols.begin(), cols.end(), [&](const Column& c){ return c.name == sc; });
-            auto it2 = std::find_if(cols.begin(), cols.end(), [&](const Column& c){ return c.name == uc; });
-            if (it1 == cols.end() || it2 == cols.end()) { std::cout << "ERR: no such column\n"; continue; }
-            Value sv = parse_value_token(svtk, it1->type);
-            Value nv = parse_value_token(nvtk, it2->type);
-            size_t n = t->update_where(sc, sv, uc, nv);
+        if (cmd == "UPDATE" && tokens.size() >= 6) {
+            std::string table_name = trim_quotes(tokens[1]);
+            std::string search_col = trim_quotes(tokens[2]);
+            std::string search_val_token = tokens[3];
+            std::string update_col = trim_quotes(tokens[4]);
+            std::string new_val_token = tokens[5];
+
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+
+            auto cols = tbl->get_columns();
+
+            std::optional<ColumnType> search_type;
+            std::optional<ColumnType> update_type;
+
+            for (size_t i = 0; i < cols.size(); i++) {
+                if (cols[i].name == search_col) search_type = cols[i].type;
+                if (cols[i].name == update_col) update_type = cols[i].type;
+            }
+            if (!search_type || !update_type) { std::cout << "ERR: no such column\n"; continue; }
+
+            Value search_value = parse_value_token(search_val_token, search_type);
+            Value new_value = parse_value_token(new_val_token, update_type);
+
+            size_t n = tbl->update_where(search_col, search_value, update_col, new_value);
             std::cout << "UPDATED " << n << "\n";
             continue;
         }
 
-        if (cmd == "DELETE" && toks.size() >= 5 && to_upper(toks[1]) == "FROM") {
-            std::string tname = trim_quotes(toks[2]);
-            std::string col   = trim_quotes(toks[3]);
-            std::string vtok  = toks[4];
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            auto cols = t->get_columns();
-            auto it = std::find_if(cols.begin(), cols.end(), [&](const Column& c){ return c.name == col; });
-            if (it == cols.end()) { std::cout << "ERR: no such column\n"; continue; }
-            Value v = parse_value_token(vtok, it->type);
-            size_t n = t->delete_where(col, v);
+        if (cmd == "DELETE" && tokens.size() >= 5 && to_upper(tokens[1]) == "FROM") {
+            std::string table_name = trim_quotes(tokens[2]);
+            std::string col_name = trim_quotes(tokens[3]);
+            std::string value_token = tokens[4];
+
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+
+            auto cols = tbl->get_columns();
+            std::optional<ColumnType> col_type;
+            for (size_t i = 0; i < cols.size(); i++) {
+                if (cols[i].name == col_name) col_type = cols[i].type;
+            }
+            if (!col_type) { std::cout << "ERR: no such column\n"; continue; }
+
+            Value v = parse_value_token(value_token, col_type);
+            size_t n = tbl->delete_where(col_name, v);
             std::cout << "DELETED " << n << "\n";
             continue;
         }
 
-        if (cmd == "PRINT" && toks.size() >= 3 && to_upper(toks[1]) == "TABLE") {
-            std::string tname = trim_quotes(toks[2]);
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            t->print_table();
+        if (cmd == "PRINT" && tokens.size() >= 3 && to_upper(tokens[1]) == "TABLE") {
+            std::string table_name = trim_quotes(tokens[2]);
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+            tbl->print_table();
             continue;
         }
 
-        if (cmd == "PRINT" && toks.size() >= 3 && to_upper(toks[1]) == "SCHEMA") {
-            std::string tname = trim_quotes(toks[2]);
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            t->print_schema();
+        if (cmd == "PRINT" && tokens.size() >= 3 && to_upper(tokens[1]) == "SCHEMA") {
+            std::string table_name = trim_quotes(tokens[2]);
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+            tbl->print_schema();
             continue;
         }
 
-        if (cmd == "IMPORT" && toks.size() >= 4 && to_upper(toks[1]) == "CSV") {
-            std::string tname  = trim_quotes(toks[2]);
-            std::string path   = trim_quotes(toks[3]);
-            bool header = (toks.size() >= 5 && to_upper(toks[4]) == "HEADER");
-            Table* t = db.get_table(tname);
-            if (!t) { std::cout << "ERR: no such table\n"; continue; }
-            size_t n = t->import_csv(path, header);
+        if (cmd == "IMPORT" && tokens.size() >= 4 && to_upper(tokens[1]) == "CSV") {
+            std::string table_name = trim_quotes(tokens[2]);
+            std::string path = trim_quotes(tokens[3]);
+            bool header = false;
+            if (tokens.size() >= 5 && to_upper(tokens[4]) == "HEADER") header = true;
+
+            Table* tbl = db.get_table(table_name);
+            if (!tbl) { std::cout << "ERR: no such table\n"; continue; }
+
+            size_t n = tbl->import_csv(path, header);
             std::cout << "IMPORTED " << n << "\n";
             continue;
         }
