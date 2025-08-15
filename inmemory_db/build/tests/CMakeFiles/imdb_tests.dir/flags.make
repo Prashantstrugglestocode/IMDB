@@ -6,7 +6,7 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/prashant/Documents/In_memory_database/inmemory_db/include -I/Users/prashant/Documents/In_memory_database/inmemory_db/build/_deps/catch2-src/src/catch2/.. -I/Users/prashant/Documents/In_memory_database/inmemory_db/build/_deps/catch2-build/generated-includes
 
-CXX_FLAGSarm64 =  -stdlib=libc++ -std=c++20 -arch arm64 -mmacosx-version-min=10.15
+CXX_FLAGSarm64 =  -stdlib=libc++ -g -Wall -Wextra -Wpedantic -std=c++20 -arch arm64 -mmacosx-version-min=10.15
 
-CXX_FLAGS =  -stdlib=libc++ -std=c++20 -arch arm64 -mmacosx-version-min=10.15
+CXX_FLAGS =  -stdlib=libc++ -g -Wall -Wextra -Wpedantic -std=c++20 -arch arm64 -mmacosx-version-min=10.15
 

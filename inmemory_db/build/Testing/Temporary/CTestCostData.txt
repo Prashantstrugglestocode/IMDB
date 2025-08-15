@@ -1,6 +1,15 @@
-unit_tests 1 0.254757
-cli_import_count 1 0.259061
-cli_rows_after_import 1 0.0124473
-cli_update 1 0.00955167
-cli_delete 1 0.00966017
+unit_core_library 1 0.243449
+cli_import_csv_counts_3 1 0.203238
+cli_rows_after_import_is_3 1 0.0103911
+cli_update_single_row 1 0.0096175
+cli_delete_single_row 1 0.0097625
+cli_create_insert_select_valid 1 0.0100947
+cli_delete_then_select_valid 1 0.0111689
+cli_create_duplicate_table_error 1 0.0112761
+cli_insert_wrong_arity_error 1 0.011899
+cli_select_unknown_column_error 1 0.013164
+cli_delete_unknown_table_error 1 0.0131001
+cli_join_basic 1 0.0138043
+cli_join_type_mismatch_error 1 0.0136262
+cli_join_missing_column_error 1 0.0151743
 ---

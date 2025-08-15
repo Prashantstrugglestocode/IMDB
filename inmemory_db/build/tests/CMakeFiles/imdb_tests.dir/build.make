@@ -96,8 +96,8 @@ imdb_tests_EXTERNAL_OBJECTS =
 tests/imdb_tests: tests/CMakeFiles/imdb_tests.dir/test_imdb.cpp.o
 tests/imdb_tests: tests/CMakeFiles/imdb_tests.dir/build.make
 tests/imdb_tests: libimdb_lib.a
-tests/imdb_tests: _deps/catch2-build/src/libCatch2Main.a
-tests/imdb_tests: _deps/catch2-build/src/libCatch2.a
+tests/imdb_tests: _deps/catch2-build/src/libCatch2Maind.a
+tests/imdb_tests: _deps/catch2-build/src/libCatch2d.a
 tests/imdb_tests: tests/CMakeFiles/imdb_tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/prashant/Documents/In_memory_database/inmemory_db/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable imdb_tests"
 	cd /Users/prashant/Documents/In_memory_database/inmemory_db/build/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/imdb_tests.dir/link.txt --verbose=$(VERBOSE)

@@ -1,1 +1,1 @@
-/usr/bin/c++  -stdlib=libc++ -arch arm64 -mmacosx-version-min=10.15 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/inmemory_db.dir/app/main.cpp.o -o bin/inmemory_db  libimdb_lib.a
+/usr/bin/c++  -stdlib=libc++ -g -Wall -Wextra -Wpedantic -arch arm64 -mmacosx-version-min=10.15 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/inmemory_db.dir/app/main.cpp.o -o bin/inmemory_db  libimdb_lib.a

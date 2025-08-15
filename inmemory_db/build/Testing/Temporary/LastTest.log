@@ -1,30 +1,80 @@
-Start testing: Aug 15 17:20 CEST
+Start testing: Aug 15 23:28 CEST
 ----------------------------------------------------------
-1/5 Testing: unit_tests
-1/5 Test: unit_tests
-Command: "/Users/prashant/Documents/In_memory_database/inmemory_db/build/tests/imdb_tests"
+1/14 Testing: unit_core_library
+1/14 Test: unit_core_library
+Command: "/Users/prashant/Documents/In_memory_database/inmemory_db/build/tests/imdb_tests" "-s" "-r" "compact"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"unit_tests" start time: Aug 15 17:20 CEST
+"unit_core_library" start time: Aug 15 23:28 CEST
 Output:
 ----------------------------------------------------------
-Randomness seeded to: 2830822405
-===============================================================================
-All tests passed (3 assertions in 1 test case)
+RNG seed: 1883511287
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:32: PASSED: t->set_primary_key("id") for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:33: PASSED: t->set_not_null("address", true) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:36: PASSED: n == 3 for: 3 == 3
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:37: PASSED: t->row_count() == 3 for: 3 == 3
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:49: PASSED: t->set_primary_key("id") for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:50: PASSED: t->set_not_null("address", true) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:54: PASSED: !(ok) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:56: PASSED: changed == 0 for: 0 == 0
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:58: PASSED: changed == 0 for: 0 == 0
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:60: PASSED: changed == 1 for: 1 == 1
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:63: PASSED: a.size() == 0 for: 0 == 0
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:64: PASSED: b.size() == 1 for: 1 == 1
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:76: PASSED: t->set_primary_key("id") for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:77: PASSED: t->set_not_null("address", true) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:81: PASSED: !(ok) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:83: PASSED: changed == 0 for: 0 == 0
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:84: PASSED: t->set_not_null("city", true) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:86: PASSED: !(ok) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:88: PASSED: changed == 0 for: 0 == 0
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:100: PASSED: t->set_primary_key("id") for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:101: PASSED: t->set_not_null("address", true) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:105: PASSED: s1.size() == 1 for: 1 == 1
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:107: PASSED: removed == 1 for: 1 == 1
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:108: PASSED: t->row_count() == 2 for: 2 == 2
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:109: PASSED: !(t->remove_column("id")) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:110: PASSED: t->remove_column("bedrooms") for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:111: PASSED: t->column_count() == 4 for: 4 == 4
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:120: PASSED: t->insert_row({ int64_t(1), std::string("A") }) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:121: PASSED: t->insert_row({ int64_t(1), std::string("B") }) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:122: PASSED: !(t->set_primary_key("id")) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:127: PASSED: t2->insert_row({ Value(std::monostate{}), std::string("C") }) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:128: PASSED: !(t2->set_primary_key("id")) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:141: PASSED: a->insert_row({ int64_t(1), std::string("x") }) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:142: PASSED: a->insert_row({ int64_t(2), std::string("y") }) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:143: PASSED: b->insert_row({ int64_t(1), std::string("p") }) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:144: PASSED: b->insert_row({ int64_t(3), std::string("q") }) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:147: PASSED: db.inner_join("a", "id", "b", "id", headers, rows) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:148: PASSED: rows.size() == 1 for: 1 == 1
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:149: PASSED: headers.size() == 4 for: 4 == 4
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:167: PASSED: db.inner_join("a", "id", "b", "id", headers, rows) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:168: PASSED: headers.size() == 4 for: 4 == 4
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:169: PASSED: rows.size() == 0 for: 0 == 0
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:187: PASSED: db.inner_join("a", "id", "b", "id", headers, rows) for: true
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:188: PASSED: rows.size() == 2 for: 2 == 2
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:189: PASSED: std::get<int64_t>(rows[0][0]) == 1 for: 1 == 1
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:190: PASSED: std::get<std::string>(rows[0][1]) == "x" for: "x" == "x"
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:191: PASSED: std::get<int64_t>(rows[1][0]) == 1 for: 1 == 1
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:192: PASSED: std::get<std::string>(rows[1][1]) == "x" for: "x" == "x"
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:207: PASSED: !(db.inner_join("a", "code", "b", "code", headers, rows)) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:218: PASSED: !(db.inner_join("a", "id", "b", "id", headers, rows)) for: !false
+/Users/prashant/Documents/In_memory_database/inmemory_db/tests/test_imdb.cpp:219: PASSED: !(db.inner_join("a", "nope", "a", "id", headers, rows)) for: !false
+All tests passed (51 assertions in 10 test cases)
+
 
 <end of output>
-Test time =   0.25 sec
+Test time =   0.24 sec
 ----------------------------------------------------------
 Test Passed.
-"unit_tests" end time: Aug 15 17:20 CEST
-"unit_tests" time elapsed: 00:00:00
+"unit_core_library" end time: Aug 15 23:28 CEST
+"unit_core_library" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-2/5 Testing: cli_import_count
-2/5 Test: cli_import_count
-Command: "/bin/bash" "-lc" "printf '%s
-' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'SELECT ALL new_house' 'PRINT TABLE new_house' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
+2/14 Testing: cli_import_csv_counts_3
+2/14 Test: cli_import_csv_counts_3
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_import_csv_counts_3.sql' | sed -E 's/^> //' | tr -d '\r'"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_import_count" start time: Aug 15 17:20 CEST
+"cli_import_csv_counts_3" start time: Aug 15 23:28 CEST
 Output:
 ----------------------------------------------------------
 
@@ -35,14 +85,14 @@ Output:
 
 Type HELP to see commands.
 
-> OK
-> OK
-> OK
-> OK
-> OK
-> OK
-> IMPORTED 3
->                 id |            address |               city |              price |           bedrooms
+OK
+OK
+OK
+OK
+OK
+OK
+IMPORTED 3
+                id |            address |               city |              price |           bedrooms
 -------------------+--------------------+--------------------+--------------------+-------------------
                  1 |          12 Oak St |           San Jose |             900000 |                  3
                  2 |        55 Pine Ave |          San Mateo |             750000 |                  2
@@ -50,7 +100,7 @@ Type HELP to see commands.
 
 Rows: 3
 
-> 
+
 === Table: new_house ===
                 id |            address |               city |              price |           bedrooms
 -------------------+--------------------+--------------------+--------------------+-------------------
@@ -60,22 +110,21 @@ Rows: 3
 
 Rows: 3
 
-> Goodbye!
+Goodbye!
 <end of output>
-Test time =   0.26 sec
+Test time =   0.20 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[IMPORTED 3]
-"cli_import_count" end time: Aug 15 17:20 CEST
-"cli_import_count" time elapsed: 00:00:00
+"cli_import_csv_counts_3" end time: Aug 15 23:28 CEST
+"cli_import_csv_counts_3" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-3/5 Testing: cli_rows_after_import
-3/5 Test: cli_rows_after_import
-Command: "/bin/bash" "-lc" "printf '%s
-' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'SELECT ALL new_house' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
+3/14 Testing: cli_rows_after_import_is_3
+3/14 Test: cli_rows_after_import_is_3
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_rows_after_import_is_3.sql' | sed -E 's/^> //' | tr -d '\r'"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_rows_after_import" start time: Aug 15 17:20 CEST
+"cli_rows_after_import_is_3" start time: Aug 15 23:28 CEST
 Output:
 ----------------------------------------------------------
 
@@ -86,14 +135,14 @@ Output:
 
 Type HELP to see commands.
 
-> OK
-> OK
-> OK
-> OK
-> OK
-> OK
-> IMPORTED 3
->                 id |            address |               city |              price |           bedrooms
+OK
+OK
+OK
+OK
+OK
+OK
+IMPORTED 3
+                id |            address |               city |              price |           bedrooms
 -------------------+--------------------+--------------------+--------------------+-------------------
                  1 |          12 Oak St |           San Jose |             900000 |                  3
                  2 |        55 Pine Ave |          San Mateo |             750000 |                  2
@@ -101,22 +150,21 @@ Type HELP to see commands.
 
 Rows: 3
 
-> Goodbye!
+Goodbye!
 <end of output>
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[Rows: 3]
-"cli_rows_after_import" end time: Aug 15 17:20 CEST
-"cli_rows_after_import" time elapsed: 00:00:00
+"cli_rows_after_import_is_3" end time: Aug 15 23:28 CEST
+"cli_rows_after_import_is_3" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-4/5 Testing: cli_update
-4/5 Test: cli_update
-Command: "/bin/bash" "-lc" "printf '%s
-' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'UPDATE new_house city Sunnyvale price 1000000' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
+4/14 Testing: cli_update_single_row
+4/14 Test: cli_update_single_row
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_update_single_row.sql' | sed -E 's/^> //' | tr -d '\r'"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_update" start time: Aug 15 17:20 CEST
+"cli_update_single_row" start time: Aug 15 23:28 CEST
 Output:
 ----------------------------------------------------------
 
@@ -127,30 +175,29 @@ Output:
 
 Type HELP to see commands.
 
-> OK
-> OK
-> OK
-> OK
-> OK
-> OK
-> IMPORTED 3
-> UPDATED 1
-> Goodbye!
+OK
+OK
+OK
+OK
+OK
+OK
+IMPORTED 3
+UPDATED 1
+Goodbye!
 <end of output>
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[UPDATED 1]
-"cli_update" end time: Aug 15 17:20 CEST
-"cli_update" time elapsed: 00:00:00
+"cli_update_single_row" end time: Aug 15 23:28 CEST
+"cli_update_single_row" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-5/5 Testing: cli_delete
-5/5 Test: cli_delete
-Command: "/bin/bash" "-lc" "printf '%s
-' 'CREATE TABLE new_house' 'ADD COLUMN new_house id INT' 'ADD COLUMN new_house address TEXT' 'ADD COLUMN new_house city TEXT' 'ADD COLUMN new_house price INT' 'ADD COLUMN new_house bedrooms INT' 'IMPORT CSV new_house sample/new_house.csv HEADER' 'DELETE FROM new_house id 2' 'EXIT' | /Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db"
+5/14 Testing: cli_delete_single_row
+5/14 Test: cli_delete_single_row
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_delete_single_row.sql' | sed -E 's/^> //' | tr -d '\r'"
 Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
-"cli_delete" start time: Aug 15 17:20 CEST
+"cli_delete_single_row" start time: Aug 15 23:28 CEST
 Output:
 ----------------------------------------------------------
 
@@ -161,22 +208,311 @@ Output:
 
 Type HELP to see commands.
 
-> OK
-> OK
-> OK
-> OK
-> OK
-> OK
-> IMPORTED 3
-> DELETED 1
-> Goodbye!
+OK
+OK
+OK
+OK
+OK
+OK
+IMPORTED 3
+DELETED 1
+Goodbye!
 <end of output>
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Pass Reason:
 Required regular expression found. Regex=[DELETED 1]
-"cli_delete" end time: Aug 15 17:20 CEST
-"cli_delete" time elapsed: 00:00:00
+"cli_delete_single_row" end time: Aug 15 23:28 CEST
+"cli_delete_single_row" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Aug 15 17:20 CEST
+6/14 Testing: cli_create_insert_select_valid
+6/14 Test: cli_create_insert_select_valid
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_create_insert_select_valid.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_create_insert_select_valid" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+OK
+OK
+OK
+OK
+                id |               name
+-------------------+-------------------
+                 1 |                  A
+                 2 |                  B
+
+Rows: 2
+
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[Rows: 2]
+"cli_create_insert_select_valid" end time: Aug 15 23:28 CEST
+"cli_create_insert_select_valid" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/14 Testing: cli_delete_then_select_valid
+7/14 Test: cli_delete_then_select_valid
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_delete_then_select_valid.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_delete_then_select_valid" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+OK
+OK
+OK
+OK
+DELETED 1
+                id |               name
+-------------------+-------------------
+                 2 |                  B
+
+Rows: 1
+
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[Rows: 1]
+"cli_delete_then_select_valid" end time: Aug 15 23:28 CEST
+"cli_delete_then_select_valid" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/14 Testing: cli_create_duplicate_table_error
+8/14 Test: cli_create_duplicate_table_error
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_create_duplicate_table_error.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_create_duplicate_table_error" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+ERR: table exists?
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[ERR: table exists\?]
+"cli_create_duplicate_table_error" end time: Aug 15 23:28 CEST
+"cli_create_duplicate_table_error" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/14 Testing: cli_insert_wrong_arity_error
+9/14 Test: cli_insert_wrong_arity_error
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_insert_wrong_arity_error.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_insert_wrong_arity_error" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+OK
+OK
+ERR: need 2 values
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[need 2 values]
+"cli_insert_wrong_arity_error" end time: Aug 15 23:28 CEST
+"cli_insert_wrong_arity_error" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/14 Testing: cli_select_unknown_column_error
+10/14 Test: cli_select_unknown_column_error
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_select_unknown_column_error.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_select_unknown_column_error" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+OK
+ERR: no such column
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[ERR: no such column]
+"cli_select_unknown_column_error" end time: Aug 15 23:28 CEST
+"cli_select_unknown_column_error" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/14 Testing: cli_delete_unknown_table_error
+11/14 Test: cli_delete_unknown_table_error
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_delete_unknown_table_error.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_delete_unknown_table_error" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+ERR: no such table
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[ERR: no such table]
+"cli_delete_unknown_table_error" end time: Aug 15 23:28 CEST
+"cli_delete_unknown_table_error" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/14 Testing: cli_join_basic
+12/14 Test: cli_join_basic
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_join_basic.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_join_basic" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+              a.id |             a.name |               b.id |             b.note
+-------------------+--------------------+--------------------+-------------------
+                 1 |                  x |                  1 |                  p
+
+Rows: 1
+
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[Rows: 1]
+"cli_join_basic" end time: Aug 15 23:28 CEST
+"cli_join_basic" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/14 Testing: cli_join_type_mismatch_error
+13/14 Test: cli_join_type_mismatch_error
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_join_type_mismatch_error.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_join_type_mismatch_error" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+OK
+OK
+OK
+OK
+OK
+ERR
+Goodbye!
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[ERR]
+"cli_join_type_mismatch_error" end time: Aug 15 23:28 CEST
+"cli_join_type_mismatch_error" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/14 Testing: cli_join_missing_column_error
+14/14 Test: cli_join_missing_column_error
+Command: "/bin/bash" "-lc" "/Users/prashant/Documents/In_memory_database/inmemory_db/build/bin/inmemory_db < '/Users/prashant/Documents/In_memory_database/inmemory_db/build/testscripts/cli_join_missing_column_error.sql' | sed -E 's/^> //' | tr -d '\r'"
+Directory: /Users/prashant/Documents/In_memory_database/inmemory_db/build
+"cli_join_missing_column_error" start time: Aug 15 23:28 CEST
+Output:
+----------------------------------------------------------
+
+=============================================
+  In-Memory Database CLI
+  Type HELP for commands, EXIT to quit
+=============================================
+
+Type HELP to see commands.
+
+OK
+OK
+OK
+OK
+OK
+OK
+ERR
+Goodbye!
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Pass Reason:
+Required regular expression found. Regex=[ERR]
+"cli_join_missing_column_error" end time: Aug 15 23:28 CEST
+"cli_join_missing_column_error" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 15 23:28 CEST

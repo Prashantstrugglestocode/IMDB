@@ -49,6 +49,8 @@ public:
 
     size_t import_csv(const std::string& path, bool header);
     bool export_csv(const std::string& path) const;
+
+    std::optional<size_t> get_column_index(const std::string& column_name) const;
 };
 
-} 
+}

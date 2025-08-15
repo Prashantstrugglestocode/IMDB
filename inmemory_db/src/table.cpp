@@ -16,6 +16,10 @@ std::optional<size_t> Table::find_column_index(const std::string& column_name) c
     return std::nullopt;
 }
 
+std::optional<size_t> Table::get_column_index(const std::string& column_name) const {
+    return find_column_index(column_name);
+}
+
 bool Table::is_null_value(const Value& v) const {
     return std::holds_alternative<std::monostate>(v);
 }
@@ -388,4 +392,4 @@ bool Table::export_csv(const std::string& path) const {
     return true;
 }
 
-} 
+}

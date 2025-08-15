@@ -28,6 +28,13 @@ public:
     size_t get_total_rows() const;
 
     bool rename_table(const std::string& old_name, const std::string& new_name);
+
+    bool inner_join(const std::string& left_table,
+                    const std::string& left_col,
+                    const std::string& right_table,
+                    const std::string& right_col,
+                    std::vector<std::string>& out_headers,
+                    std::vector<std::vector<Value>>& out_rows) const;
 };
 
-} 
+}
